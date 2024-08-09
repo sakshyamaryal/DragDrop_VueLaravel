@@ -1,48 +1,44 @@
 <template>
   <div class="container mt-5 mb-5">
-    <div class="row">
-      <div class="col mx-2 px-2 py-3 bg-light border rounded">
+    <div class="columns">
+      <div class="column">
         <h6>Idea 💡</h6>
         <draggable class="draggable-list" :list="tasks.ideas" group="tasks">
-          <div v-for="(idea, i) in tasks.ideas" :key="i">
-            <div class="bg-white mt-3 p-2 shadow border rounded">
-              <p>{{ idea }}</p>
+          <template #item="{element}">
+            <div class="draggable-item">
+              <p>{{ element }}</p>
             </div>
-          </div>
+          </template>
         </draggable>
       </div>
-      <div class="col mx-2 px-2 py-3 bg-light border rounded">
+      <div class="column">
         <h6>Todo ✍</h6>
         <draggable class="draggable-list" :list="tasks.todos" group="tasks">
-          <div v-for="(todo, i) in tasks.todos" :key="i">
-            <div class="bg-white mt-3 p-2 shadow border rounded">
-              <p>{{ todo }}</p>
+          <template #item="{element}">
+            <div class="draggable-item">
+              <p>{{ element }}</p>
             </div>
-          </div>
+          </template>
         </draggable>
       </div>
-      <div class="col mx-2 px-2 py-3 bg-light border rounded">
+      <div class="column">
         <h6>In Progress 🗓</h6>
-        <draggable
-          class="draggable-list"
-          :list="tasks.inProgress"
-          group="tasks"
-        >
-          <div v-for="(task, i) in tasks.inProgress" :key="i">
-            <div class="bg-white mt-3 p-2 shadow border rounded">
-              <p>{{ task }}</p>
+        <draggable class="draggable-list" :list="tasks.inProgress" group="tasks">
+          <template #item="{element}">
+            <div class="draggable-item">
+              <p>{{ element }}</p>
             </div>
-          </div>
+          </template>
         </draggable>
       </div>
-      <div class="col mx-2 px-2 py-3 bg-light border rounded">
+      <div class="column">
         <h6>Ready to go ✅</h6>
         <draggable class="draggable-list" :list="tasks.completed" group="tasks">
-          <div v-for="(task, i) in tasks.completed" :key="i">
-            <div class="bg-white mt-3 p-2 shadow border rounded">
-              <p>{{ task }}</p>
+          <template #item="{element}">
+            <div class="draggable-item">
+              <p>{{ element }}</p>
             </div>
-          </div>
+          </template>
         </draggable>
       </div>
     </div>
@@ -69,17 +65,41 @@ export default {
 </script>
 
 <style scoped>
-h6 {
+.container {
+  padding: 1rem;
+}
+
+.columns {
+  display: flex;
+  /* flex-wrap: wrap; */
+  gap: 1rem; /* Space between columns */
+}
+
+.column {
+  flex: 1 1 calc(25% - 1rem); /* Adjust the width of each column */
+  min-width: 200px; /* Minimum width of each column */
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.column h6 {
   font-weight: 700;
+  margin-bottom: 1rem;
 }
-.col {
-  height: 90vh;
-  overflow: auto;
-}
+
 .draggable-list {
-  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between items */
 }
-.draggable-list > div {
+
+.draggable-item {
+  background-color: #ffffff;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
 </style>
