@@ -2,7 +2,7 @@ require('./bootstrap');
 import { createApp } from 'vue';
 import router from './router';
 import HelloWorld from './components/Welcome.vue';
-import PMS from './components/PMS.vue';  // Import your PMS component
+import PMS from './components/PMS.vue';  
 
 const app = createApp({});
 

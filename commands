@@ -1,2 +1,8 @@
 
 npm install vuedraggable
+
+php artisan make:migration create_task_categories_table
+
+php artisan make:migration create_tasks_table
+
+php artisan make:factory TaskFactory --model=Task

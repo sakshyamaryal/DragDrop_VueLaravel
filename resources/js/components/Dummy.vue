@@ -2,20 +2,42 @@
   <div class="container">
     <h2 class="main-heading">Task Management</h2>
     <div class="columns">
-      <div class="column" v-for="(task, category) in tasks" :key="task.category_id">
-        <h6>{{ category }}</h6>
-        <draggable 
-          class="draggable-list" 
-          :list="task.tasks" 
-          group="tasks" 
-          @start="start" 
-          @end="finish"
-          :data-category="category"
-          :data-category_id="task.category_id"
-        >
+      <div class="column" v-for="task in  tasks">
+        <h6>Backlog</h6>
+        <draggable class="draggable-list" :list="tasks.backlogs" group="tasks">
           <template #item="{element}">
-            <div :class="['draggable-item', category]" :data-category_id="element.category_id" :data-id="element.id">
-              <p>{{ element.title  }}</p>
+            <div class="draggable-item backlog">
+              <p>{{ element }}</p>
+            </div>
+          </template>
+        </draggable>
+      </div>
+      <div class="column">
+        <h6>Up Next</h6>
+        <draggable class="draggable-list" :list="tasks.upnexts" group="tasks">
+          <template #item="{element}">
+            <div class="draggable-item up-next">
+              <p>{{ element }}</p>
+            </div>
+          </template>
+        </draggable>
+      </div>
+      <div class="column">
+        <h6>In Progress 🗓</h6>
+        <draggable class="draggable-list" :list="tasks.inProgress" group="tasks">
+          <template #item="{element}">
+            <div class="draggable-item in-progress">
+              <p>{{ element }}</p>
+            </div>
+          </template>
+        </draggable>
+      </div>
+      <div class="column">
+        <h6>Ready to go</h6>
+        <draggable class="draggable-list" :list="tasks.completed" group="tasks">
+          <template #item="{element}">
+            <div class="draggable-item completed">
+              <p>{{ element }}</p>
             </div>
           </template>
         </draggable>
@@ -25,53 +47,21 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Draggable from 'vuedraggable';
-
 export default {
   components: {
     Draggable,
   },
   data() {
     return {
-      tasks: {},
-      startCategory: null,
-      endCategory: null,
-      startCategoryId: null,
-      endCategoryId: null,
+      tasks: {
+        backlogs: ["Redesign the homepage", "Improve user onboarding"],
+        upnexts: ["Refactor the authentication module", "Optimize API calls"],
+        inProgress: ["Develop new features for the dashboard", "Update user profile component"],
+        completed: ["Fix bugs in the payment system", "Deploy the latest build"],
+      },
     };
   },
-  created() {
-    this.fetchTasks();
-  },
-  methods: {
-    async fetchTasks() {
-      try {
-        const response = await axios.get('/api/tasks');
-        this.tasks = response.data;
-        console.log(response.data);
-        
-      } catch (error) {
-        console.error('Error fetching tasks:', error);
-      }
-    },
-    start(event) {
-      this.startCategory = event.from.dataset.category;
-      this.startCategoryId = event.from.dataset.category_id;
-      console.log(event);
-      
-      console.log('Drag Start: ', this.startCategory);
-      console.log('Drag Start: ', this.startCategoryId);
-    },
-    finish(event) {
-      this.endCategory = event.to.dataset.category;
-      this.endCategoryId= event.to.dataset.category_id;
-
-      console.log(event);
-      console.log('Drag Start: ', this.endCategory);
-      console.log('Drag Start: ', this.endCategoryId);
-    }
-  }
 };
 </script>
 
@@ -140,19 +130,19 @@ export default {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.Backlog {
+.backlog {
   border-left: 5px solid #007bff;
 }
 
-.Next {
+.upnext {
   border-left: 5px solid #ffc107;
 }
 
-.Progress {
+.in-progress {
   border-left: 5px solid #17a2b8;
 }
 
-.Completed {
+.completed {
   border-left: 5px solid #28a745;
 }
 
