@@ -1,9 +1,15 @@
 <template>
   <div class="container">
     <h6 class="main-heading">Task Management</h6>
+       <div class="open-modal-btn  pull-right"  @click="showModal = true" style="radius:50%"> ➕         
+      </div>
     <div class="columns">
       <div class="column" v-for="(task, category) in tasks" :key="task.category_id">
-        <h6>{{ category }}</h6>
+        
+        <h6>{{ category }}
+       
+        </h6>
+        
         <draggable 
           class="draggable-list" 
           :list="task.tasks" 
@@ -21,8 +27,24 @@
         </draggable>
       </div>
     </div>
+
+    <!-- Backlog Modal -->
+    <div class="modal" v-if="showModal">
+      <div class="modal-content">
+        <span class="close-btn" @click="showModal = false">&times;</span>
+        <h2>Add Task</h2>
+        <form @submit.prevent="addTask">
+          <div class="form-group">
+            <label for="taskName">Title:</label>
+            <input type="text" id="taskName" v-model="newTask.name" required />
+          </div>
+          <button type="submit" class="submit-btn">Add Task</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -40,6 +62,10 @@ export default {
       startCategoryId: null,
       endCategoryId: null,
       taskid: null,
+      showModal: false,
+      newTask: {
+        name: '',
+      },
     };
   },
   created() {
@@ -76,7 +102,26 @@ export default {
         endCategoryId: this.endCategoryId,
         taskId: this.taskid
       });
-    }
+    },
+
+    async addTask() {
+
+      try {
+        await axios.post('/api/tasks', {
+          title: this.newTask.name,
+          category_id: 1
+        });
+
+        this.showModal = false;
+
+        this.newTask.name = '';
+
+        await this.fetchTasks();
+
+      } catch (error) {
+        console.error('Error adding task:', error);
+      }
+    },
   }
 };
 </script>
@@ -184,5 +229,71 @@ export default {
   .column {
     flex: 1 1 calc(100% - 1rem);
   }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
 }
 </style>

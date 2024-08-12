@@ -20840,7 +20840,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       endCategory: null,
       startCategoryId: null,
       endCategoryId: null,
-      taskid: null
+      taskid: null,
+      showModal: false,
+      newTask: {
+        name: ''
+      }
     };
   },
   created: function created() {
@@ -20893,6 +20897,37 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         endCategoryId: this.endCategoryId,
         taskId: this.taskid
       });
+    },
+    addTask: function addTask() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/tasks', {
+                title: _this2.newTask.name,
+                category_id: 1
+              });
+            case 3:
+              _this2.showModal = false;
+              _this2.newTask.name = '';
+              _context2.next = 7;
+              return _this2.fetchTasks();
+            case 7:
+              _context2.next = 12;
+              break;
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2["catch"](0);
+              console.error('Error adding task:', _context2.t0);
+            case 12:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 9]]);
+      }))();
     }
   }
 });
@@ -20948,9 +20983,41 @@ var _hoisted_3 = {
   "class": "columns"
 };
 var _hoisted_4 = ["data-category_id", "data-id"];
+var _hoisted_5 = {
+  key: 0,
+  "class": "modal"
+};
+var _hoisted_6 = {
+  "class": "modal-content"
+};
+var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Add Task", -1 /* HOISTED */);
+});
+var _hoisted_8 = {
+  "class": "form-group"
+};
+var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "taskName"
+  }, "Title:", -1 /* HOISTED */);
+});
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "submit",
+    "class": "submit-btn"
+  }, "Add Task", -1 /* HOISTED */);
+});
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_draggable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("draggable");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tasks, function (task, category) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "open-modal-btn pull-right",
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $data.showModal = true;
+    }),
+    style: {
+      "radius": "50%"
+    }
+  }, " ➕ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tasks, function (task, category) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "column",
       key: task.category_id
@@ -20973,7 +21040,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["list", "onStart", "onEnd", "data-category", "data-category_id"])]);
-  }), 128 /* KEYED_FRAGMENT */))])]);
+  }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Backlog Modal "), $data.showModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "close-btn",
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $data.showModal = false;
+    })
+  }, "×"), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.addTask && $options.addTask.apply($options, arguments);
+    }, ["prevent"]))
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    id: "taskName",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.newTask.name = $event;
+    }),
+    required: ""
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.newTask.name]])]), _hoisted_10], 32 /* NEED_HYDRATION */)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -21132,7 +21215,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-7ad96a0a] {\r\n  padding: 2rem;\r\n  background: linear-gradient(to right, #e2e2e2, #f0f4f8);\n}\n.main-heading[data-v-7ad96a0a] {\r\n  text-align: center;\r\n  font-size: 2rem;\r\n  margin-bottom: 2rem;\r\n  color: #333;\r\n  font-weight: bold;\n}\n.columns[data-v-7ad96a0a] {\r\n  display: flex;\r\n  gap: 1rem;\r\n  overflow-x: auto;\r\n  padding: 1rem 0;\n}\n.column[data-v-7ad96a0a] {\r\n  flex: 1;\r\n  min-width: 300px;\r\n  background-color: #ffffff;\r\n  padding: 1.5rem;\r\n  border-radius: 0.75rem;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\r\n  transition: box-shadow 0.3s ease, transform 0.3s ease;\r\n  background: linear-gradient(to right, #f7f7f7, #eaeaea);\n}\n.column h6[data-v-7ad96a0a] {\r\n  font-weight: 700;\r\n  font-size: 1.25rem;\r\n  margin-bottom: 1rem;\r\n  color: #444;\r\n  border-bottom: 3px solid #ddd;\r\n  padding-bottom: 0.5rem;\r\n  text-transform: uppercase;\r\n  letter-spacing: 0.5px;\n}\n.draggable-list[data-v-7ad96a0a] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 1rem;\n}\n.draggable-item[data-v-7ad96a0a] {\r\n  background-color: #ffffff;\r\n  padding: 1rem;\r\n  border: 1px solid #ddd;\r\n  border-radius: 0.5rem;\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;\n}\n.draggable-item[data-v-7ad96a0a]:hover {\r\n  background-color: #f9f9f9;\r\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);\r\n  transform: scale(1.02);\n}\n.Backlog[data-v-7ad96a0a] {\r\n  border-left: 5px solid #007bff;\r\n  cursor:pointer;\n}\n.Next[data-v-7ad96a0a] {\r\n  border-left: 5px solid #ffc107;\r\n  cursor:pointer;\n}\n.Progress[data-v-7ad96a0a] {\r\n  border-left: 5px solid #f06292;\r\n  cursor:pointer;\n}\n.Completed[data-v-7ad96a0a] {\r\n  border-left: 5px solid #28a745;\r\n  cursor:pointer;\n}\n@media (max-width: 1024px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(33.333% - 1rem);\n}\n}\n@media (max-width: 768px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(50% - 1rem);\n}\n}\n@media (max-width: 480px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(100% - 1rem);\n}\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-7ad96a0a] {\r\n  padding: 2rem;\r\n  background: linear-gradient(to right, #e2e2e2, #f0f4f8);\n}\n.main-heading[data-v-7ad96a0a] {\r\n  text-align: center;\r\n  font-size: 2rem;\r\n  margin-bottom: 2rem;\r\n  color: #333;\r\n  font-weight: bold;\n}\n.columns[data-v-7ad96a0a] {\r\n  display: flex;\r\n  gap: 1rem;\r\n  overflow-x: auto;\r\n  padding: 1rem 0;\n}\n.column[data-v-7ad96a0a] {\r\n  flex: 1;\r\n  min-width: 300px;\r\n  background-color: #ffffff;\r\n  padding: 1.5rem;\r\n  border-radius: 0.75rem;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\r\n  transition: box-shadow 0.3s ease, transform 0.3s ease;\r\n  background: linear-gradient(to right, #f7f7f7, #eaeaea);\n}\n.column h6[data-v-7ad96a0a] {\r\n  font-weight: 700;\r\n  font-size: 1.25rem;\r\n  margin-bottom: 1rem;\r\n  color: #444;\r\n  border-bottom: 3px solid #ddd;\r\n  padding-bottom: 0.5rem;\r\n  text-transform: uppercase;\r\n  letter-spacing: 0.5px;\n}\n.draggable-list[data-v-7ad96a0a] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 1rem;\n}\n.draggable-item[data-v-7ad96a0a] {\r\n  background-color: #ffffff;\r\n  padding: 1rem;\r\n  border: 1px solid #ddd;\r\n  border-radius: 0.5rem;\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;\n}\n.draggable-item[data-v-7ad96a0a]:hover {\r\n  background-color: #f9f9f9;\r\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);\r\n  transform: scale(1.02);\n}\n.Backlog[data-v-7ad96a0a] {\r\n  border-left: 5px solid #007bff;\r\n  cursor:pointer;\n}\n.Next[data-v-7ad96a0a] {\r\n  border-left: 5px solid #ffc107;\r\n  cursor:pointer;\n}\n.Progress[data-v-7ad96a0a] {\r\n  border-left: 5px solid #f06292;\r\n  cursor:pointer;\n}\n.Completed[data-v-7ad96a0a] {\r\n  border-left: 5px solid #28a745;\r\n  cursor:pointer;\n}\n@media (max-width: 1024px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(33.333% - 1rem);\n}\n}\n@media (max-width: 768px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(50% - 1rem);\n}\n}\n@media (max-width: 480px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(100% - 1rem);\n}\n}\n.modal[data-v-7ad96a0a] {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\n}\n.modal-content[data-v-7ad96a0a] {\r\n  background: #fff;\r\n  padding: 2rem;\r\n  border-radius: 0.5rem;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n  position: relative;\r\n  max-width: 500px;\r\n  width: 100%;\n}\n.close-btn[data-v-7ad96a0a] {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  font-size: 1.5rem;\r\n  cursor: pointer;\n}\n.form-group[data-v-7ad96a0a] {\r\n  margin-bottom: 1rem;\n}\nlabel[data-v-7ad96a0a] {\r\n  display: block;\r\n  margin-bottom: 0.5rem;\r\n  font-weight: bold;\n}\ninput[data-v-7ad96a0a], textarea[data-v-7ad96a0a] {\r\n  width: 100%;\r\n  padding: 0.5rem;\r\n  border: 1px solid #ddd;\r\n  border-radius: 0.25rem;\n}\ntextarea[data-v-7ad96a0a] {\r\n  resize: vertical;\r\n  min-height: 100px;\n}\n.submit-btn[data-v-7ad96a0a] {\r\n  background-color: #007bff;\r\n  color: white;\r\n  border: none;\r\n  padding: 0.5rem 1rem;\r\n  border-radius: 0.5rem;\r\n  cursor: pointer;\r\n  transition: background-color 0.3s ease;\n}\n.submit-btn[data-v-7ad96a0a]:hover {\r\n  background-color: #0056b3;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

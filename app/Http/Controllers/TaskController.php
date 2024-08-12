@@ -32,5 +32,21 @@ class TaskController extends Controller
         return response()->json($formattedTasks);
     
     }
+
+    public function postTask(Request $request)
+    {
+        // Validate incoming request
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:task_categories,id'
+        ]);
+        
+        $task = Task::create([
+            'title' => $validated['title'],
+            'category_id' => $validated['category_id']
+        ]);
+
+        return response()->json($task, 201);
+    }
     
 }
