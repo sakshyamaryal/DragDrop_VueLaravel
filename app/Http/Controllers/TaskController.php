@@ -12,7 +12,7 @@ class TaskController extends Controller
     public function index()
     {
         
-        $tasks = Task::with('category')->orderBy('id', 'desc')->get()->groupBy(function($task) {
+        $tasks = Task::with('category')->get()->groupBy(function($task) {
             return $task->category->name;
         });
 

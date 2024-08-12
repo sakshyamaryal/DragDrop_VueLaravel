@@ -1,9 +1,15 @@
-<!-- src/components/Modal.vue -->
 <template>
-  <div class="modal" v-if="isVisible">
+  <div class="modal" v-if="visible">
     <div class="modal-content">
-      <span class="close-btn" @click="$emit('close')">&times;</span>
-      <slot></slot>
+      <span class="close-btn" @click="close">&times;</span>
+      <h2>Add Task</h2>
+      <form @submit.prevent="submit">
+        <div class="form-group">
+          <label for="taskName">Task Name:</label>
+          <input type="text" id="taskName" v-model="taskName" required />
+        </div>
+        <button type="submit" class="submit-btn">Add Task</button>
+      </form>
     </div>
   </div>
 </template>
@@ -11,9 +17,31 @@
 <script>
 export default {
   props: {
-    isVisible: {
+    visible: {
       type: Boolean,
-      default: false
+      required: true
+    },
+    onClose: {
+      type: Function,
+      required: true
+    },
+    onSubmit: {
+      type: Function,
+      required: true
+    }
+  },
+  data() {
+    return {
+      taskName: ''
+    };
+  },
+  methods: {
+    close() {
+      this.onClose();
+    },
+    submit() {
+      this.onSubmit(this.taskName);
+      this.taskName = '';
     }
   }
 };
@@ -32,6 +60,7 @@ export default {
   align-items: center;
   z-index: 1000;
 }
+
 .modal-content {
   background: #fff;
   padding: 2rem;
@@ -41,11 +70,43 @@ export default {
   max-width: 500px;
   width: 100%;
 }
+
 .close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
 }
 </style>

@@ -1,38 +1,33 @@
-<!-- src/components/Button.vue -->
 <template>
-  <button :class="buttonClass" @click="handleClick">
-    <slot></slot>
-  </button>
+  <button class="open-modal-btn" @click="onClick">➕</button>
 </template>
 
 <script>
 export default {
   props: {
-    buttonClass: {
-      type: String,
-      default: ''
-    }
-  },
-  methods: {
-    handleClick() {
-      this.$emit('click');
+    onClick: {
+      type: Function,
+      required: true
     }
   }
 };
 </script>
 
 <style scoped>
-.button {
-  background-color: #007bff;
+.open-modal-btn {
+  background-color: white;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
   border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.5rem;
+  cursor: pointer;
 }
-.button:hover {
+.open-modal-btn:hover {
   background-color: #0056b3;
 }
 </style>
