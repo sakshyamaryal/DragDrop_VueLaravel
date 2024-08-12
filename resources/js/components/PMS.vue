@@ -1,14 +1,11 @@
 <template>
   <div class="container">
     <h6 class="main-heading">Task Management</h6>
-       <div class="open-modal-btn  pull-right"  @click="showModal = true" style="radius:50%"> ➕         
-      </div>
+    <button class="open-modal-btn" @click="showModal = true">➕</button>
     <div class="columns">
       <div class="column" v-for="(task, category) in tasks" :key="task.category_id">
-        
-        <h6>{{ category }}
-       
-        </h6>
+        <h6>{{ category }}</h6>
+        <!-- Add button for Backlog category -->
         
         <draggable 
           class="draggable-list" 
@@ -35,7 +32,7 @@
         <h2>Add Task</h2>
         <form @submit.prevent="addTask">
           <div class="form-group">
-            <label for="taskName">Title:</label>
+            <label for="taskName">Task Name:</label>
             <input type="text" id="taskName" v-model="newTask.name" required />
           </div>
           <button type="submit" class="submit-btn">Add Task</button>
@@ -103,7 +100,7 @@ export default {
         taskId: this.taskid
       });
     },
-
+    
     async addTask() {
 
       try {
