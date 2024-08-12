@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="main-heading">Task Management</h2>
+    <h6 class="main-heading">Task Management</h6>
     <div class="columns">
       <div class="column" v-for="(task, category) in tasks" :key="task.category_id">
         <h6>{{ category }}</h6>
@@ -15,7 +15,7 @@
         >
           <template #item="{element}">
             <div :class="['draggable-item', category]" :data-category_id="element.category_id" :data-id="element.id">
-              <p>{{ element.title  }}</p>
+              <p>{{ element.title }}</p>
             </div>
           </template>
         </draggable>
@@ -39,6 +39,7 @@ export default {
       endCategory: null,
       startCategoryId: null,
       endCategoryId: null,
+      taskid: null,
     };
   },
   created() {
@@ -50,7 +51,6 @@ export default {
         const response = await axios.get('/api/tasks');
         this.tasks = response.data;
         console.log(response.data);
-        
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
@@ -58,18 +58,24 @@ export default {
     start(event) {
       this.startCategory = event.from.dataset.category;
       this.startCategoryId = event.from.dataset.category_id;
-      console.log(event);
-      
-      console.log('Drag Start: ', this.startCategory);
-      console.log('Drag Start: ', this.startCategoryId);
+      this.taskid = event.item.dataset.id;
+
+      console.log('Drag Start:', {
+        startCategory: this.startCategory,
+        startCategoryId: this.startCategoryId,
+        taskId: this.taskid
+      });
     },
     finish(event) {
       this.endCategory = event.to.dataset.category;
-      this.endCategoryId= event.to.dataset.category_id;
+      this.endCategoryId = event.to.dataset.category_id;
+      this.taskid = event.item.dataset.id;
 
-      console.log(event);
-      console.log('Drag Start: ', this.endCategory);
-      console.log('Drag Start: ', this.endCategoryId);
+      console.log('Drag End:', {
+        endCategory: this.endCategory,
+        endCategoryId: this.endCategoryId,
+        taskId: this.taskid
+      });
     }
   }
 };
@@ -78,7 +84,7 @@ export default {
 <style scoped>
 .container {
   padding: 2rem;
-  background: linear-gradient(to right, #f0f4f8, #e2e2e2);
+  background: linear-gradient(to right, #e2e2e2, #f0f4f8);
 }
 
 .main-heading {
@@ -86,6 +92,7 @@ export default {
   font-size: 2rem;
   margin-bottom: 2rem;
   color: #333;
+  font-weight: bold;
 }
 
 .columns {
@@ -101,20 +108,20 @@ export default {
   background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 0.75rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  background: linear-gradient(to right, #f7f7f7, #eaeaea);
+  
 }
 
-.column:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
+
 
 .column h6 {
   font-weight: 700;
   font-size: 1.25rem;
   margin-bottom: 1rem;
-  color: #333;
-  border-bottom: 2px solid #ddd;
+  color: #444;
+  border-bottom: 3px solid #ddd;
   padding-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -132,28 +139,33 @@ export default {
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .draggable-item:hover {
   background-color: #f9f9f9;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
 }
 
 .Backlog {
   border-left: 5px solid #007bff;
+  cursor:pointer;
 }
 
 .Next {
   border-left: 5px solid #ffc107;
+  cursor:pointer;
 }
 
 .Progress {
-  border-left: 5px solid #17a2b8;
+  border-left: 5px solid #f06292;
+  cursor:pointer;
 }
 
 .Completed {
   border-left: 5px solid #28a745;
+  cursor:pointer;
 }
 
 @media (max-width: 1024px) {

@@ -20839,7 +20839,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       startCategory: null,
       endCategory: null,
       startCategoryId: null,
-      endCategoryId: null
+      endCategoryId: null,
+      taskid: null
     };
   },
   created: function created() {
@@ -20876,16 +20877,22 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     start: function start(event) {
       this.startCategory = event.from.dataset.category;
       this.startCategoryId = event.from.dataset.category_id;
-      console.log(event);
-      console.log('Drag Start: ', this.startCategory);
-      console.log('Drag Start: ', this.startCategoryId);
+      this.taskid = event.item.dataset.id;
+      console.log('Drag Start:', {
+        startCategory: this.startCategory,
+        startCategoryId: this.startCategoryId,
+        taskId: this.taskid
+      });
     },
     finish: function finish(event) {
       this.endCategory = event.to.dataset.category;
       this.endCategoryId = event.to.dataset.category_id;
-      console.log(event);
-      console.log('Drag Start: ', this.endCategory);
-      console.log('Drag Start: ', this.endCategoryId);
+      this.taskid = event.item.dataset.id;
+      console.log('Drag End:', {
+        endCategory: this.endCategory,
+        endCategoryId: this.endCategoryId,
+        taskId: this.taskid
+      });
     }
   }
 });
@@ -20933,7 +20940,7 @@ var _hoisted_1 = {
   "class": "container"
 };
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
     "class": "main-heading"
   }, "Task Management", -1 /* HOISTED */);
 });
@@ -21125,7 +21132,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-7ad96a0a] {\r\n  padding: 2rem;\r\n  background: linear-gradient(to right, #f0f4f8, #e2e2e2);\n}\n.main-heading[data-v-7ad96a0a] {\r\n  text-align: center;\r\n  font-size: 2rem;\r\n  margin-bottom: 2rem;\r\n  color: #333;\n}\n.columns[data-v-7ad96a0a] {\r\n  display: flex;\r\n  gap: 1rem;\r\n  overflow-x: auto;\r\n  padding: 1rem 0;\n}\n.column[data-v-7ad96a0a] {\r\n  flex: 1;\r\n  min-width: 300px;\r\n  background-color: #ffffff;\r\n  padding: 1.5rem;\r\n  border-radius: 0.75rem;\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n  transition: box-shadow 0.3s ease;\n}\n.column[data-v-7ad96a0a]:hover {\r\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);\n}\n.column h6[data-v-7ad96a0a] {\r\n  font-weight: 700;\r\n  font-size: 1.25rem;\r\n  margin-bottom: 1rem;\r\n  color: #333;\r\n  border-bottom: 2px solid #ddd;\r\n  padding-bottom: 0.5rem;\r\n  text-transform: uppercase;\r\n  letter-spacing: 0.5px;\n}\n.draggable-list[data-v-7ad96a0a] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 1rem;\n}\n.draggable-item[data-v-7ad96a0a] {\r\n  background-color: #ffffff;\r\n  padding: 1rem;\r\n  border: 1px solid #ddd;\r\n  border-radius: 0.5rem;\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n  transition: background-color 0.3s ease, box-shadow 0.3s ease;\n}\n.draggable-item[data-v-7ad96a0a]:hover {\r\n  background-color: #f9f9f9;\r\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);\n}\n.Backlog[data-v-7ad96a0a] {\r\n  border-left: 5px solid #007bff;\n}\n.Next[data-v-7ad96a0a] {\r\n  border-left: 5px solid #ffc107;\n}\n.Progress[data-v-7ad96a0a] {\r\n  border-left: 5px solid #17a2b8;\n}\n.Completed[data-v-7ad96a0a] {\r\n  border-left: 5px solid #28a745;\n}\n@media (max-width: 1024px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(33.333% - 1rem);\n}\n}\n@media (max-width: 768px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(50% - 1rem);\n}\n}\n@media (max-width: 480px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(100% - 1rem);\n}\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-7ad96a0a] {\r\n  padding: 2rem;\r\n  background: linear-gradient(to right, #e2e2e2, #f0f4f8);\n}\n.main-heading[data-v-7ad96a0a] {\r\n  text-align: center;\r\n  font-size: 2rem;\r\n  margin-bottom: 2rem;\r\n  color: #333;\r\n  font-weight: bold;\n}\n.columns[data-v-7ad96a0a] {\r\n  display: flex;\r\n  gap: 1rem;\r\n  overflow-x: auto;\r\n  padding: 1rem 0;\n}\n.column[data-v-7ad96a0a] {\r\n  flex: 1;\r\n  min-width: 300px;\r\n  background-color: #ffffff;\r\n  padding: 1.5rem;\r\n  border-radius: 0.75rem;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\r\n  transition: box-shadow 0.3s ease, transform 0.3s ease;\r\n  background: linear-gradient(to right, #f7f7f7, #eaeaea);\n}\n.column h6[data-v-7ad96a0a] {\r\n  font-weight: 700;\r\n  font-size: 1.25rem;\r\n  margin-bottom: 1rem;\r\n  color: #444;\r\n  border-bottom: 3px solid #ddd;\r\n  padding-bottom: 0.5rem;\r\n  text-transform: uppercase;\r\n  letter-spacing: 0.5px;\n}\n.draggable-list[data-v-7ad96a0a] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 1rem;\n}\n.draggable-item[data-v-7ad96a0a] {\r\n  background-color: #ffffff;\r\n  padding: 1rem;\r\n  border: 1px solid #ddd;\r\n  border-radius: 0.5rem;\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;\n}\n.draggable-item[data-v-7ad96a0a]:hover {\r\n  background-color: #f9f9f9;\r\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);\r\n  transform: scale(1.02);\n}\n.Backlog[data-v-7ad96a0a] {\r\n  border-left: 5px solid #007bff;\r\n  cursor:pointer;\n}\n.Next[data-v-7ad96a0a] {\r\n  border-left: 5px solid #ffc107;\r\n  cursor:pointer;\n}\n.Progress[data-v-7ad96a0a] {\r\n  border-left: 5px solid #f06292;\r\n  cursor:pointer;\n}\n.Completed[data-v-7ad96a0a] {\r\n  border-left: 5px solid #28a745;\r\n  cursor:pointer;\n}\n@media (max-width: 1024px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(33.333% - 1rem);\n}\n}\n@media (max-width: 768px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(50% - 1rem);\n}\n}\n@media (max-width: 480px) {\n.column[data-v-7ad96a0a] {\r\n    flex: 1 1 calc(100% - 1rem);\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
