@@ -21143,13 +21143,12 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     }
   },
   methods: {
-    // submitForm() {
-    //   console.log(this.formData); // Debug form data
-    //   this.$emit('submit', this.formData);
-    // },
+    submitForm: function submitForm() {
+      console.log(this.formData); // Debug form data
+      this.$emit('submit', this.formData);
+    },
     updateFormData: function updateFormData(fieldName, value) {
       this.formData[fieldName] = value;
-      this.$emit('submit', this.formData);
     }
   }
 });
@@ -21399,7 +21398,7 @@ var _hoisted_2 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
     onSubmit: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
-      return _ctx.submitForm && _ctx.submitForm.apply(_ctx, arguments);
+      return $options.submitForm && $options.submitForm.apply($options, arguments);
     }, ["prevent"]))
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.fields, function (field, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {

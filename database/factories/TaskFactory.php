@@ -22,6 +22,7 @@ class TaskFactory extends Factory
         return [
             //
             'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
             'category_id' => Category::inRandomOrder()->first()->id,
         ];
     }

@@ -43,6 +43,7 @@ class TaskController extends Controller
 
         $task = Task::create([
             'title' => $validated['title'],
+            'description' => $validated['description'],
             'category_id' => $validated['category_id']
         ]);
 
