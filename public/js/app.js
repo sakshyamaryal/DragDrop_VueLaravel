@@ -20852,7 +20852,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       taskid: null,
       showModal: false,
       newTask: {
-        name: ''
+        name: '',
+        description: ''
       },
       newContainer: {
         name: '',
@@ -21089,6 +21090,17 @@ __webpack_require__.r(__webpack_exports__);
     category: {
       type: String,
       required: true
+    },
+    categoryColor: {
+      type: String,
+      "default": '#ddd' // Default color if none is provided
+    }
+  },
+  computed: {
+    dynamicStyle: function dynamicStyle() {
+      return {
+        borderLeft: "5px solid ".concat(this.categoryColor)
+      };
     }
   }
 });
@@ -21144,7 +21156,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   },
   methods: {
     submitForm: function submitForm() {
-      console.log(this.formData); // Debug form data
+      console.log('Form submitted with data:', this.formData);
       this.$emit('submit', this.formData);
     },
     updateFormData: function updateFormData(fieldName, value) {
@@ -21213,6 +21225,10 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     category: {
+      type: String,
+      required: true
+    },
+    categoryColor: {
       type: String,
       required: true
     },
@@ -21301,8 +21317,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       categoryId: categoryData.category_id,
       onStart: $options.start,
       onEnd: $options.finish,
-      openModal: $options.openBackLogModal
-    }, null, 8 /* PROPS */, ["tasks", "category", "categoryId", "onStart", "onEnd", "openModal"]);
+      openModal: $options.openBackLogModal,
+      categoryColor: categoryData.category_color
+    }, null, 8 /* PROPS */, ["tasks", "category", "categoryId", "onStart", "onEnd", "openModal", "categoryColor"]);
   }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
     visible: $data.showModal,
     onClose: $options.checkModal
@@ -21368,8 +21385,9 @@ var _hoisted_1 = ["data-id"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['draggable-item', $props.category]),
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)($options.dynamicStyle),
     "data-id": $props.task.id
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.task.title), 1 /* TEXT */)], 10 /* CLASS, PROPS */, _hoisted_1);
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.task.title), 1 /* TEXT */)], 14 /* CLASS, STYLE, PROPS */, _hoisted_1);
 }
 
 /***/ }),
@@ -21490,13 +21508,14 @@ var _hoisted_1 = {
   "class": "column"
 };
 var _hoisted_2 = {
-  key: 0
+  key: 0,
+  "class": "add pull-right"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_DraggableItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DraggableItem");
   var _component_draggable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("draggable");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.category) + " ", 1 /* TEXT */), $props.category == 'Backlog' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "open-modal-btn pull-right",
+    "class": "open-modal-btn",
     onClick: _cache[0] || (_cache[0] = function () {
       return $props.openModal && $props.openModal.apply($props, arguments);
     })
@@ -21513,8 +21532,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       var element = _ref.element;
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DraggableItem, {
         category: $props.category,
+        categoryColor: $props.categoryColor,
         task: element
-      }, null, 8 /* PROPS */, ["category", "task"])];
+      }, null, 8 /* PROPS */, ["category", "categoryColor", "task"])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["list", "onStart", "onEnd", "data-category", "data-category_id"])]);
@@ -21796,7 +21816,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.column[data-v-1be5bf64] {\r\n  flex: 1;\r\n  min-width: 300px;\r\n  background-color: #ffffff;\r\n  padding: 1.5rem;\r\n  border-radius: 0.75rem;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\r\n  background: linear-gradient(to right, #f7f7f7, #eaeaea);\n}\n.column h6[data-v-1be5bf64] {\r\n  font-weight: 700;\r\n  font-size: 1.25rem;\r\n  margin-bottom: 1rem;\r\n  color: #444;\r\n  border-bottom: 3px solid #ddd;\r\n  padding-bottom: 0.5rem;\r\n  text-transform: uppercase;\r\n  letter-spacing: 0.5px;\n}\n.draggable-item[data-v-1be5bf64]:hover {\r\n  background-color: #f9f9f9;\r\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);\r\n  transform: scale(1.02);\n}\n.draggable-list[data-v-1be5bf64] {\r\n  min-height: 100px;\n}\n.draggable-item[data-v-1be5bf64] {\r\n  padding: 0.5rem;\r\n  margin-bottom: 0.5rem;\r\n  background-color: #f9f9f9;\r\n  border: 1px solid #ddd;\r\n  border-radius: 4px;\n}\n.Backlog[data-v-1be5bf64] {\r\n  border-left: 5px solid #007bff;\r\n  cursor:pointer;\n}\n.Next[data-v-1be5bf64] {\r\n  border-left: 5px solid #ffc107;\r\n  cursor:pointer;\n}\n.Progress[data-v-1be5bf64] {\r\n  border-left: 5px solid #f06292;\r\n  cursor:pointer;\n}\n.Completed[data-v-1be5bf64] {\r\n  border-left: 5px solid #28a745;\r\n  cursor:pointer;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.column[data-v-1be5bf64] {\r\n  flex: 1;\r\n  min-width: 300px;\r\n  background-color: #ffffff;\r\n  padding: 1.5rem;\r\n  border-radius: 0.75rem;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\r\n  background: linear-gradient(to right, #f7f7f7, #eaeaea);\n}\n.column h6[data-v-1be5bf64] {\r\n  font-weight: 700;\r\n  font-size: 1.25rem;\r\n  margin-bottom: 1rem;\r\n  color: #444;\r\n  border-bottom: 3px solid #ddd;\r\n  padding-bottom: 0.5rem;\r\n  text-transform: uppercase;\r\n  letter-spacing: 0.5px;\n}\n.draggable-item[data-v-1be5bf64]:hover {\r\n  background-color: #f9f9f9;\r\n  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);\r\n  transform: scale(1.02);\n}\n.draggable-list[data-v-1be5bf64] {\r\n  min-height: 100px;\n}\n.draggable-item[data-v-1be5bf64] {\r\n  padding: 0.5rem;\r\n  margin-bottom: 0.5rem;\r\n  background-color: #f9f9f9;\r\n  border: 1px solid #ddd;\r\n  border-radius: 4px;\n}\n.pull-right[data-v-1be5bf64] {\r\n  float: right;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

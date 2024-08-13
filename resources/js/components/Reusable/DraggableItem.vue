@@ -1,5 +1,5 @@
 <template>
-  <div :class="['draggable-item', category]" :data-id="task.id">
+  <div :class="['draggable-item', category]" :style="dynamicStyle" :data-id="task.id">
     <p>{{ task.title }}</p>
   </div>
 </template>
@@ -14,6 +14,17 @@ export default {
     category: {
       type: String,
       required: true
+    },
+    categoryColor: {
+      type: String,
+      default: '#ddd'  // Default color if none is provided
+    }
+  },
+  computed: {
+    dynamicStyle() {
+      return {
+        borderLeft: `5px solid ${this.categoryColor}`
+      };
     }
   }
 };

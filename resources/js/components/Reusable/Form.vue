@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log(this.formData); // Debug form data
+      console.log('Form submitted with data:', this.formData);
       this.$emit('submit', this.formData);
     },
     updateFormData(fieldName, value) {

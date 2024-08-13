@@ -16,10 +16,10 @@ class TaskCategoriesTableSeeder extends Seeder
     {
         //
         DB::table('task_categories')->insert([
-            ['name' => 'Backlog'],
-            ['name' => 'Up Next'],
-            ['name' => 'In Progress'],
-            ['name' => 'Completed'],
+            ['name' => 'Backlog', 'color' => 'red'],
+            // ['name' => 'Up Next'],
+            // ['name' => 'In Progress'],
+            // ['name' => 'Completed'],
         ]);
     }
 }

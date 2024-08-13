@@ -12,6 +12,7 @@
         :onStart="start"
         :onEnd="finish"
         :openModal="openBackLogModal"
+        :categoryColor="categoryData.category_color"
       />
     </div>
 
@@ -56,6 +57,7 @@ export default {
       showModal: false,
       newTask: {
         name: '',
+        description: '',
       },
       newContainer: {
         name: '',

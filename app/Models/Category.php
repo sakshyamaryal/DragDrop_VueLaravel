@@ -11,7 +11,7 @@ class Category extends Model
 
     protected $table = 'task_categories';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'color'];
 
     // Define the relationship to the Task model
     public function tasks()

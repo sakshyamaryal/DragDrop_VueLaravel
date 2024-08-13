@@ -1,8 +1,8 @@
 <template>
   <div class="column">
     <h6>{{ category }}
-      <span v-if="category == 'Backlog'">
-        <button class="open-modal-btn pull-right" @click="openModal">➕</button>
+      <span class="add pull-right" v-if="category == 'Backlog'">
+        <button class="open-modal-btn " @click="openModal">➕</button>
       </span>
     </h6>
     
@@ -16,7 +16,7 @@
       :data-category_id="categoryId"
     >
       <template #item="{ element }">
-        <DraggableItem :category="category" :task="element" />
+        <DraggableItem :category="category" :categoryColor="categoryColor" :task="element" />
       </template>
     </draggable>
   </div>
@@ -37,6 +37,10 @@ export default {
       required: true
     },
     category: {
+      type: String,
+      required: true
+    },
+    categoryColor: {
       type: String,
       required: true
     },
@@ -107,24 +111,10 @@ export default {
   border-radius: 4px;
 }
 
-.Backlog {
-  border-left: 5px solid #007bff;
-  cursor:pointer;
-}
 
-.Next {
-  border-left: 5px solid #ffc107;
-  cursor:pointer;
-}
 
-.Progress {
-  border-left: 5px solid #f06292;
-  cursor:pointer;
-}
-
-.Completed {
-  border-left: 5px solid #28a745;
-  cursor:pointer;
+.pull-right {
+  float: right;
 }
 
 </style>
