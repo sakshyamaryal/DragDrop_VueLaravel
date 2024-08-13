@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    
-    <Button :onClick="() => showModal = true"/>
+    <Button @click="checkModal" />
+
     <div class="columns">
       <TaskColumn
         v-for="(categoryData, category) in tasks"
@@ -11,14 +11,23 @@
         :categoryId="categoryData.category_id"
         :onStart="start"
         :onEnd="finish"
+        :openModal="openBackLogModal"
       />
     </div>
 
-    <Modal
-      :visible="showModal"
-      :onClose="() => showModal = false"
-      :onSubmit="addTask"
-    />
+    <Modal :visible="showModal" :onClose="checkModal">
+      <template v-slot:header>
+        <h2>{{ isNewBackLog ? "Add New BackLog": "Add Container "}}</h2>
+      </template>
+      <template v-slot:body>
+        <DynamicForm
+          :fields="isNewBackLog ? taskFields : containerFields"
+          :initialData="newTask"
+          submitButtonText="Add"
+          @submit="handleFormSubmit"
+        />
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -27,12 +36,14 @@ import axios from 'axios';
 import Button from './Reusable/Button.vue';
 import Modal from './Reusable/Modal.vue';
 import TaskColumn from './Reusable/TaskColumn.vue';
+import DynamicForm from './Reusable/Form.vue';
 
 export default {
   components: {
     Button,
     Modal,
-    TaskColumn
+    TaskColumn,
+    DynamicForm
   },
   data() {
     return {
@@ -46,6 +57,20 @@ export default {
       newTask: {
         name: '',
       },
+      newContainer: {
+        name: '',
+        color: '',
+      },
+      taskFields: [
+        { name: 'name', label: 'Task Name', component: 'input', props: { type: 'text' }, required: true },
+        { name: 'description', label: 'Description', component: 'textarea', required: false }
+      ],
+      containerFields: [
+        { name: 'name', label: 'Container Name', component: 'input', props: { type: 'text' }, required: true },
+        { name: 'color', label: 'color', component: 'input', props: { type: 'text' }, required: true },
+      ],
+      isNewBackLog: false,
+      isNewContainer: false
     };
   },
   created() {
@@ -81,12 +106,31 @@ export default {
         taskId: this.taskid
       });
     },
-    
-    async addTask(name) {
+    openBackLogModal(){
+      this.isNewBackLog = true;
+      this.showModal=true;
+    },
+    checkModal(){
+      if (this.showModal) {
+        this.isNewBackLog = false;
+        this.showModal=false;
+      }else{
+        this.showModal = true;
+      }
+    },
+    async handleFormSubmit(formData) {
+      if (this.isNewBackLog) {
+        await this.handleTaskSubmit(formData);
+      } else {
+        await this.addNewContainer(formData);
+      }
+    },
+    async handleTaskSubmit(taskData) {
       try {
         await axios.post('/api/tasks', {
-          title: name,
-          category_id: 1 
+          title: taskData.name,
+          description: taskData.description,
+          category_id: 1
         });
         this.showModal = false;
         await this.fetchTasks();
@@ -94,6 +138,18 @@ export default {
         console.error('Error adding task:', error);
       }
     },
+    async addNewContainer(containerData) {
+      try {
+        await axios.post('/api/containers', {
+          name: containerData.name,
+          color: containerData.color
+        });
+        this.showModal = false;
+        await this.fetchTasks();
+      } catch (error) {
+        console.error('Error adding container:', error);
+      }
+    }
   }
 };
 </script>

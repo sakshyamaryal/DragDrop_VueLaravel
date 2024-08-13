@@ -1,25 +1,59 @@
-<!-- src/components/TaskForm.vue -->
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-group">
-      <label for="taskName">Title:</label>
-      <input type="text" id="taskName" v-model="task.title" required />
+    <div v-for="(field, index) in fields" :key="index" class="form-group">
+      <label :for="field.name">{{ field.label }}:</label>
+      <component
+          :is="field.component"
+          v-model="formData[field.name]"
+          v-bind="field.props"
+          :id="field.name"
+          :name="field.name"
+          :required="field.required"
+          @input="updateFormData(field.name, $event.target.value)"
+        />
     </div>
-    <button type="submit" class="submit-btn">Add Task</button>
+    <button type="submit" class="submit-btn">{{ submitButtonText }}</button>
   </form>
 </template>
+          <!--  -->
 
 <script>
 export default {
   props: {
-    task: {
+    fields: {
+      type: Array,
+      required: true
+    },
+    initialData: {
       type: Object,
-      default: () => ({ title: '' })
+      default: () => ({})
+    },
+    submitButtonText: {
+      type: String,
+      default: 'Submit'
+    }
+  },
+  data() {
+    return {
+      
+      formData: { ...this.initialData } // Ensure formData is initialized
+    };
+  },
+  watch: {
+    initialData: {
+      handler(newValue) {
+        this.formData = { ...newValue };
+      },
+      deep: true
     }
   },
   methods: {
     submitForm() {
-      this.$emit('submit', this.task);
+      console.log(this.formData); // Debug form data
+      this.$emit('submit', this.formData);
+    },
+    updateFormData(fieldName, value) {
+      this.formData[fieldName] = value;
     }
   }
 };
@@ -34,7 +68,7 @@ label {
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
-input, textarea {
+input, textarea, select {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ddd;

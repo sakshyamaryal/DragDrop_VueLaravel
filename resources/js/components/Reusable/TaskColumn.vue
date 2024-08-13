@@ -1,6 +1,10 @@
 <template>
   <div class="column">
-    <h6>{{ category }}</h6>
+    <h6>{{ category }}
+      <span v-if="category == 'Backlog'">
+        <button class="open-modal-btn pull-right" @click="openModal">➕</button>
+      </span>
+    </h6>
     
     <draggable
       class="draggable-list"
@@ -47,8 +51,18 @@ export default {
     onEnd: {
       type: Function,
       required: true
-    }
-  }
+    },
+    openModal: {
+      type: Function,
+      required: true
+    },
+  },
+  // methods:{ 
+  //   openModal(){
+  //     console.log('openModal');
+  //     this.$emit('openModal');
+  //   }
+  // }
 };
 </script>
 

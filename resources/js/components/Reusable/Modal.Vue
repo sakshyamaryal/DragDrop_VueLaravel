@@ -1,15 +1,13 @@
 <template>
   <div class="modal" v-if="visible">
     <div class="modal-content">
-      <span class="close-btn" @click="close">&times;</span>
-      <h2>Add Task</h2>
-      <form @submit.prevent="submit">
-        <div class="form-group">
-          <label for="taskName">Task Name:</label>
-          <input type="text" id="taskName" v-model="taskName" required />
-        </div>
-        <button type="submit" class="submit-btn">Add Task</button>
-      </form>
+      <span class="close-btn" @click="this.$emit('close');">&times;</span>
+      <slot name="header">
+        <h2>Modal Header</h2>
+      </slot>
+      <slot name="body">
+        <p>No content provided.</p>
+      </slot>
     </div>
   </div>
 </template>
@@ -23,26 +21,13 @@ export default {
     },
     onClose: {
       type: Function,
-      required: true
-    },
-    onSubmit: {
-      type: Function,
-      required: true
+      // required: true
     }
-  },
-  data() {
-    return {
-      taskName: ''
-    };
   },
   methods: {
-    close() {
-      this.onClose();
-    },
-    submit() {
-      this.onSubmit(this.taskName);
-      this.taskName = '';
-    }
+    // close() {
+    //   this.onClose();
+    // }
   }
 };
 </script>
@@ -89,11 +74,16 @@ label {
   font-weight: bold;
 }
 
-input {
+input, textarea, select {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 0.25rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 .submit-btn {
