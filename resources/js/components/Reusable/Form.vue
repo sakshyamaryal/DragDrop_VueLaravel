@@ -15,7 +15,7 @@
     <button type="submit" class="submit-btn">{{ submitButtonText }}</button>
   </form>
 </template>
-          <!--  -->
+
 
 <script>
 export default {

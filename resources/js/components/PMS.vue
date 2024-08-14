@@ -92,16 +92,34 @@ export default {
       this.startCategory = event.from.dataset.category;
       this.startCategoryId = event.from.dataset.category_id;
       this.taskid = event.item.dataset.id;
+      console.log(event);
+      
       console.log('Drag Start:', {
         startCategory: this.startCategory,
         startCategoryId: this.startCategoryId,
         taskId: this.taskid
       });
     },
-    finish(event) {
+    async finish(event) {
       this.endCategory = event.to.dataset.category;
       this.endCategoryId = event.to.dataset.category_id;
-      this.taskid = event.item.dataset.id;
+      // this.taskid = event.item.dataset.id;
+
+      if (this.startCategoryId != this.endCategoryId) {
+        // alert(this.taskid + " from " + this.startCategoryId + " to " + this.endCategoryId);
+        
+        try {
+          await axios.put(`/api/tasks/${this.taskid}`, {
+            category_id: this.endCategoryId
+          });
+
+          console.log('Task updated successfully');
+        } catch (error) {
+          console.error('Error updating task:', error);
+        }
+      }
+
+
       console.log('Drag End:', {
         endCategory: this.endCategory,
         endCategoryId: this.endCategoryId,

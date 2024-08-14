@@ -79,5 +79,14 @@ class TaskController extends Controller
 
         return response()->json($task, 201);
     }
+
+    public function update(Request $request, $id)
+    {
+        $task = Task::findOrFail($id);
+        $task->category_id = $request->input('category_id');
+        $task->save();
+
+        return response()->json($task);
+    }
     
 }

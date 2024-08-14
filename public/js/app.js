@@ -20929,6 +20929,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.startCategory = event.from.dataset.category;
       this.startCategoryId = event.from.dataset.category_id;
       this.taskid = event.item.dataset.id;
+      console.log(event);
       console.log('Drag Start:', {
         startCategory: this.startCategory,
         startCategoryId: this.startCategoryId,
@@ -20936,14 +20937,43 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     finish: function finish(event) {
-      this.endCategory = event.to.dataset.category;
-      this.endCategoryId = event.to.dataset.category_id;
-      this.taskid = event.item.dataset.id;
-      console.log('Drag End:', {
-        endCategory: this.endCategory,
-        endCategoryId: this.endCategoryId,
-        taskId: this.taskid
-      });
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _this2.endCategory = event.to.dataset.category;
+              _this2.endCategoryId = event.to.dataset.category_id;
+              // this.taskid = event.item.dataset.id;
+              if (!(_this2.startCategoryId != _this2.endCategoryId)) {
+                _context2.next = 12;
+                break;
+              }
+              _context2.prev = 3;
+              _context2.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/tasks/".concat(_this2.taskid), {
+                category_id: _this2.endCategoryId
+              });
+            case 6:
+              console.log('Task updated successfully');
+              _context2.next = 12;
+              break;
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2["catch"](3);
+              console.error('Error updating task:', _context2.t0);
+            case 12:
+              console.log('Drag End:', {
+                endCategory: _this2.endCategory,
+                endCategoryId: _this2.endCategoryId,
+                taskId: _this2.taskid
+              });
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[3, 9]]);
+      }))();
     },
     openBackLogModal: function openBackLogModal() {
       this.isNewBackLog = true;
@@ -20958,62 +20988,31 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
     },
     handleFormSubmit: function handleFormSubmit(formData) {
-      var _this2 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
-            case 0:
-              if (!_this2.isNewBackLog) {
-                _context2.next = 5;
-                break;
-              }
-              _context2.next = 3;
-              return _this2.handleTaskSubmit(formData);
-            case 3:
-              _context2.next = 7;
-              break;
-            case 5:
-              _context2.next = 7;
-              return _this2.addNewContainer(formData);
-            case 7:
-            case "end":
-              return _context2.stop();
-          }
-        }, _callee2);
-      }))();
-    },
-    handleTaskSubmit: function handleTaskSubmit(taskData) {
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.prev = 0;
+              if (!_this3.isNewBackLog) {
+                _context3.next = 5;
+                break;
+              }
               _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/tasks', {
-                title: taskData.name,
-                description: taskData.description,
-                category_id: 1
-              });
+              return _this3.handleTaskSubmit(formData);
             case 3:
-              _this3.showModal = false;
-              _context3.next = 6;
-              return _this3.fetchTasks();
-            case 6:
-              _context3.next = 11;
+              _context3.next = 7;
               break;
-            case 8:
-              _context3.prev = 8;
-              _context3.t0 = _context3["catch"](0);
-              console.error('Error adding task:', _context3.t0);
-            case 11:
+            case 5:
+              _context3.next = 7;
+              return _this3.addNewContainer(formData);
+            case 7:
             case "end":
               return _context3.stop();
           }
-        }, _callee3, null, [[0, 8]]);
+        }, _callee3);
       }))();
     },
-    addNewContainer: function addNewContainer(containerData) {
+    handleTaskSubmit: function handleTaskSubmit(taskData) {
       var _this4 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
@@ -21021,9 +21020,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context4.prev = 0;
               _context4.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/containers', {
-                name: containerData.name,
-                color: containerData.color
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/tasks', {
+                title: taskData.name,
+                description: taskData.description,
+                category_id: 1
               });
             case 3:
               _this4.showModal = false;
@@ -21035,12 +21035,42 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 8:
               _context4.prev = 8;
               _context4.t0 = _context4["catch"](0);
-              console.error('Error adding container:', _context4.t0);
+              console.error('Error adding task:', _context4.t0);
             case 11:
             case "end":
               return _context4.stop();
           }
         }, _callee4, null, [[0, 8]]);
+      }))();
+    },
+    addNewContainer: function addNewContainer(containerData) {
+      var _this5 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/containers', {
+                name: containerData.name,
+                color: containerData.color
+              });
+            case 3:
+              _this5.showModal = false;
+              _context5.next = 6;
+              return _this5.fetchTasks();
+            case 6:
+              _context5.next = 11;
+              break;
+            case 8:
+              _context5.prev = 8;
+              _context5.t0 = _context5["catch"](0);
+              console.error('Error adding container:', _context5.t0);
+            case 11:
+            case "end":
+              return _context5.stop();
+          }
+        }, _callee5, null, [[0, 8]]);
       }))();
     }
   }
